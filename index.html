@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walentynki 💘</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        overflow: hidden;
+        font-family: 'Poppins', sans-serif;
+        background: url("tlo_glowne.jpg") no-repeat center center/cover;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("tlo_glowne.jpg") no-repeat center center;
+        background-size: cover;
+        filter: blur(5px);       /* tu kontrolujesz stopień rozmycia */
+        transform: scale(1.1);   /* lekki zoom out */
+        z-index: -1;             /* żeby nie zasłaniało tekstu */
+    }
+
+    h1 {
+        font-size: 42px;
+        color: white;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        margin-bottom: 40px;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 80px;
+    }
+
+    button {
+        padding: 18px 40px;
+        font-size: 20px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+    }
+
+    #yesBtn {
+        background: linear-gradient(45deg, #ff4da6, #ff0066);
+        color: white;
+        box-shadow: 0 0 20px rgba(255,0,100,0.6);
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.1);
+    }
+
+    #noBtn {
+        background: linear-gradient(45deg, #444, #111);
+        color: white;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    #hiddenMessage {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-size: 35px;
+        color: white;
+        background: url("zdjecie_po_tak.jpg") no-repeat center center/cover;
+        animation: fadeIn 1s ease forwards;
+        padding: 20px;
+    }
+
+    img.emoji {
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.1em;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Hej Wiktoria, zostaniesz moją walentynką? ❤️</h1>
+
+<div class="buttons">
+    <button id="yesBtn">TAK</button>
+    <button id="noBtn">NIE</button>
+</div>
+
+
+<div id="hiddenMessage">
+    Supeeeeeeeeeeer, widziałem, że się zgodzisz 😊<br>
+    Bardzo się cieszę, że cię mam, dużo buziaków - Mokiś 💖
+    A no i mam nadzieję, że u Bartosza to zajebista imba będzie
+</div>
+
+<!-- Twemoji -->
+<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const hiddenMessage = document.getElementById("hiddenMessage");
+
+    const noTexts = [
+        "aha?",
+        "ej 😡",
+        "szon przestań",
+        "nie ten guzik",
+        "kliknij ten drugi guzik",
+        "wika przestan",
+        "nie bądz taka 😡",
+        "no weź kliknij tak 😥",
+        "wiktoria nie ten!"
+    ];
+
+    let isMoving = false;
+
+    noBtn.addEventListener("mouseover", function() {
+
+        if (!isMoving) {
+            noBtn.style.position = "fixed";
+            isMoving = true;
+        }
+
+        const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
+        noBtn.innerText = randomText;
+
+        const margin = 20;
+        const maxX = window.innerWidth - noBtn.offsetWidth - margin;
+        const maxY = window.innerHeight - noBtn.offsetHeight - margin;
+
+        const x = Math.max(margin, Math.random() * maxX);
+        const y = Math.max(margin, Math.random() * maxY);
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    });
+
+    yesBtn.addEventListener("click", function() {
+        hiddenMessage.style.display = "flex";
+        twemoji.parse(document.body);
+    });
+
+    // Zamiana wszystkich emoji na styl Twemoji
+    twemoji.parse(document.body);
+</script>
+<audio id="bgMusic" loop>
+    <source src="muzyka.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // przeglądarki blokują autoplay
+    // muzyka zaczyna grać po pierwszym kliknięciu
+    document.addEventListener("click", function() {
+        document.getElementById("bgMusic").play();
+        document.getElementById("bgMusic").volume = 0.3; // 50% głośności
+    }, { once: true });
+</script>
+</body>
+</html>
