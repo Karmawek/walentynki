@@ -140,39 +140,35 @@
         "wiktoria nie ten!"
     ];
 
-    let isMoving = false;
+function moveNoBtn() {
+    // ustawiamy pozycję fixed przy każdym ruchu
+    noBtn.style.position = "fixed";
 
-    noBtn.addEventListener("mouseover", function() {
+    // losowy tekst
+    const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
+    noBtn.innerText = randomText;
 
-        if (!isMoving) {
-            noBtn.style.position = "fixed";
-            isMoving = true;
-        }
+    const margin = 20;
+    const maxX = window.innerWidth - noBtn.offsetWidth - margin;
+    const maxY = window.innerHeight - noBtn.offsetHeight - margin;
 
-        const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
-        noBtn.innerText = randomText;
+    const x = Math.max(margin, Math.random() * maxX);
+    const y = Math.max(margin, Math.random() * maxY);
 
-        const margin = 20;
-        const maxX = window.innerWidth - noBtn.offsetWidth - margin;
-        const maxY = window.innerHeight - noBtn.offsetHeight - margin;
-
-        const x = Math.max(margin, Math.random() * maxX);
-        const y = Math.max(margin, Math.random() * maxY);
-
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-    });
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
 
 // Komputer: hover myszką
-        noBtn.addEventListener("mouseover", moveNoBtn);
+noBtn.addEventListener("mouseover", moveNoBtn);
 
 // Telefon / dotyk: kliknięcie
-        noBtn.addEventListener("click", moveNoBtn);
+noBtn.addEventListener("click", moveNoBtn);
 
-        yesBtn.addEventListener("click", function() {
-            hiddenMessage.style.display = "flex";
-
-    });
+// TAK
+yesBtn.addEventListener("click", function() {
+    hiddenMessage.style.display = "flex";
+});
 
     // Zamiana wszystkich emoji na styl Twemoji
     twemoji.parse(document.body);
